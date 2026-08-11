@@ -67,6 +67,19 @@ code { font-family: var(--mono); font-size: .88em; }
 }
 .skip-link:focus { left: 0; }
 
+/* ── 자리표시자 ─────────────────────────────────────────── */
+/* 문구를 채우면 <span class="ph">를 지우면 됩니다. */
+.ph {
+  display: inline-block;
+  color: var(--fg-muted);
+  font-weight: inherit;
+  opacity: .5;
+  border: 1px dashed color-mix(in srgb, var(--fg-muted) 45%, transparent);
+  border-radius: 6px;
+  padding: 0 .35em;
+}
+.grad.ph { color: var(--fg-muted); background: none; -webkit-text-fill-color: currentColor; }
+
 /* ── header ─────────────────────────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 50;
