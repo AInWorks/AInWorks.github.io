@@ -60,15 +60,24 @@ const links = [
     transition: color .2s ease, border-color .2s ease;
   }
   .toggle:hover { color: var(--ink); border-color: var(--ink-3); }
-  .toggle svg { grid-area: 1 / 1; }
-  .toggle__moon { display: none; }
+  /* 두 아이콘을 겹쳐두고 페이드 + 회전으로 교차시킨다 (display 스위치는 툭 끊긴다) */
+  .toggle svg {
+    grid-area: 1 / 1;
+    transition: opacity .4s cubic-bezier(.4,0,.2,1), transform .5s cubic-bezier(.4,0,.2,1);
+  }
+  .toggle__sun  { opacity: 1; transform: rotate(0) scale(1); }
+  .toggle__moon { opacity: 0; transform: rotate(-70deg) scale(.6); }
 
   /* 지금이 라이트면 "다크로 가는" 달을, 다크면 해를 보여준다 */
-  :global(:root[data-theme='dark']) .toggle__sun { display: none; }
-  :global(:root[data-theme='dark']) .toggle__moon { display: block; }
+  :global(:root[data-theme='dark']) .toggle__sun  { opacity: 0; transform: rotate(70deg) scale(.6); }
+  :global(:root[data-theme='dark']) .toggle__moon { opacity: 1; transform: rotate(0) scale(1); }
   @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme='light'])) .toggle__sun { display: none; }
-    :global(:root:not([data-theme='light'])) .toggle__moon { display: block; }
+    :global(:root:not([data-theme='light'])) .toggle__sun  { opacity: 0; transform: rotate(70deg) scale(.6); }
+    :global(:root:not([data-theme='light'])) .toggle__moon { opacity: 1; transform: rotate(0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toggle svg { transition: none; }
   }
 
   .nav__cta { padding: .58em 1.1em; }

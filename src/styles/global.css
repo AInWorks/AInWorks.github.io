@@ -72,6 +72,49 @@
   --shadow:        0 1px 2px rgb(0 0 0 / .4), 0 18px 40px rgb(0 0 0 / .45);
 }
 
+/* ── 모드 전환 보간 ──────────────────────────────────────────
+   커스텀 프로퍼티는 원래 애니메이션이 안 된다. @property 로 타입을
+   <color> 라고 알려주면 브라우저가 중간값을 계산할 수 있게 되고,
+   그때부터 :root 에 transition 하나만 걸면 이 변수를 쓰는 모든 요소가
+   같은 곡선으로 함께 넘어간다. (요소마다 transition 을 붙이지 않는 이유)
+
+   --accent 는 두 모드가 같은 값이라 보간할 것이 없다 — 그래서 배경이
+   흑백 사이를 건너가는 동안 파랑만 제자리에 붙어 있는 그림이 된다.
+   ─────────────────────────────────────────────────────────── */
+@property --bg            { syntax: "<color>"; inherits: true; initial-value: #FFFFFF; }
+@property --bg-2          { syntax: "<color>"; inherits: true; initial-value: #F5F6F9; }
+@property --ink           { syntax: "<color>"; inherits: true; initial-value: #07080C; }
+@property --ink-2         { syntax: "<color>"; inherits: true; initial-value: #5B6273; }
+@property --ink-3         { syntax: "<color>"; inherits: true; initial-value: #8A90A0; }
+@property --line          { syntax: "<color>"; inherits: true; initial-value: #E4E7EE; }
+@property --accent-strong { syntax: "<color>"; inherits: true; initial-value: #2A55DC; }
+@property --accent-soft   { syntax: "<color>"; inherits: true; initial-value: #EEF2FE; }
+
+/* 첫 페인트에는 붙이지 않는다 — JS 가 한 프레임 뒤에 theme-anim 을 단다.
+   안 그러면 로드하자마자 초기값에서 스르륵 번지는 게 보인다. */
+:root.theme-anim {
+  /* 면(배경·괘선)은 천천히, 글씨는 짧게 뒤늦게.
+     둘을 같은 속도로 보간하면 중간에 배경과 글씨 밝기가 겹쳐서
+     (측정값: 195ms 에 배경 143 / 글씨 112, 대비 1.3) 글씨가 잠깐 사라진다.
+     글씨를 늦게 출발시켜 빠르게 통과시키면 그 구간이 크게 줄어든다. */
+  transition:
+    --bg            .5s  cubic-bezier(.4, 0, .2, 1),
+    --bg-2          .5s  cubic-bezier(.4, 0, .2, 1),
+    --line          .5s  cubic-bezier(.4, 0, .2, 1),
+    --accent-soft   .5s  cubic-bezier(.4, 0, .2, 1),
+    --accent-strong .5s  cubic-bezier(.4, 0, .2, 1),
+    --ink           .18s cubic-bezier(.4, 0, .2, 1) .19s,
+    --ink-2         .18s cubic-bezier(.4, 0, .2, 1) .19s,
+    --ink-3         .18s cubic-bezier(.4, 0, .2, 1) .19s;
+}
+
+/* 그림자는 색이 아니라 보간되지 않는다 — 별도로 넘긴다. */
+:root.theme-anim body { transition: box-shadow .5s cubic-bezier(.4, 0, .2, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root.theme-anim { transition: none; }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 

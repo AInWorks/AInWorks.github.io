@@ -55,6 +55,10 @@ const {
 
       // 2) 테마 토글
       const root = document.documentElement;
+
+      // 첫 페인트가 끝난 뒤에 보간을 켠다 (로드 직후 색이 번지는 것 방지)
+      requestAnimationFrame(() => requestAnimationFrame(() => root.classList.add('theme-anim')));
+
       const sysDark = matchMedia('(prefers-color-scheme: dark)');
       const current = () => root.dataset.theme || (sysDark.matches ? 'dark' : 'light');
       document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
