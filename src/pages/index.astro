@@ -1,264 +1,251 @@
 ---
 import Base from '../layouts/Base.astro';
 
-/* 문구는 이 세 배열에 모여 있습니다. 마크업은 건드리지 마세요. */
+/* 문구는 이 두 배열에 모여 있습니다. 마크업은 건드리지 마세요. */
 
 const products = [
-  {
-    name: 'TeamOPS',
-    kind: '팀 협업',
-    status: '개발 중',
-    body: '흩어진 회의록·할 일·문서를 저장소 하나로 모으는 팀 작업공간. 우리가 쓰려고 만들기 시작했습니다.',
-  },
-  {
-    name: '온라인 사무실',
-    kind: '협업 공간',
-    status: 'TODO: 상태',
-    body: 'TODO: 한 줄 설명. 원격으로 일하는 팀이 실제로 같은 공간에 있는 감각을 어떻게 만드는지.',
-  },
-  {
-    name: 'AI 노트',
-    kind: '생산성',
-    status: 'TODO: 상태',
-    body: 'TODO: 한 줄 설명. 기존 노트 앱과 무엇이 다른지 한 문장으로.',
-  },
-  {
-    name: '게임',
-    kind: '게임',
-    status: 'TODO: 상태',
-    body: 'TODO: 한 줄 설명. 이름이 정해졌다면 이름으로 바꾸세요.',
-  },
+  { n: '01', name: 'TeamOPS',       kind: '팀 협업',   status: '개발 중',
+    body: '흩어진 회의록·할 일·문서를 저장소 하나로 모으는 팀 작업공간. 우리가 쓰려고 만들기 시작했습니다.' },
+  { n: '02', name: '온라인 사무실', kind: '협업 공간', status: 'TODO',
+    body: 'TODO: 한 줄 설명. 원격으로 일하는 팀이 같은 공간에 있는 감각을 어떻게 만드는지.' },
+  { n: '03', name: 'AI 노트',       kind: '생산성',    status: 'TODO',
+    body: 'TODO: 한 줄 설명. 기존 노트 앱과 무엇이 다른지 한 문장으로.' },
+  { n: '04', name: '게임',          kind: '게임',      status: 'TODO',
+    body: 'TODO: 한 줄 설명. 이름이 정해졌다면 이름으로 바꾸세요.' },
 ];
 
 const team = [
-  { name: 'pyodep', role: 'TODO: 역할', body: 'TODO: 한 줄. 이력이 아니라 지금 뭘 만들고 있는지.' },
+  { name: 'pyodep', role: 'TODO: 역할', body: 'TODO: 지금 뭘 만들고 있는지 한 줄.' },
   { name: 'wons07', role: 'TODO: 역할', body: 'TODO: 한 줄.' },
   { name: 'TODO',   role: 'TODO: 역할', body: 'TODO: 한 줄.' },
 ];
-
-const description =
-  'AI와 In의 합성어, 아인웍스. 개발자와 기획자 3명이 진짜 만들고 싶은 것을 전부 만듭니다.';
 ---
 
-<Base title="AInWorks — 만들고 싶은 것을 전부 만듭니다" description={description}>
-  <!-- ── Hero ───────────────────────────────────────────── -->
+<Base title="AInWorks — 만들고 싶은 것을 전부 만듭니다">
+
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
-    <div class="container">
-      <p class="hero__status reveal">
-        <span class="dot" aria-hidden="true"></span>세 명이 만드는 중
-      </p>
-
-      <h1 class="hero__title reveal">
-        만들고 싶은 것을<br />
-        <span class="serif">전부</span> 만듭니다
+    <div class="container hero__body">
+      <p class="label reveal">TEAM OF THREE · 2026</p>
+      <h1 class="display hero__title reveal">
+        만들고 싶은 것을<br />전부 만듭니다
       </h1>
-
       <p class="lede hero__lede reveal">
-        아인웍스는 개발자와 기획자 세 명이 모인 회사입니다.
-        팀 협업 도구, 온라인 사무실, AI 노트, 게임 —
-        누가 시켜서가 아니라 필요하다고 느껴서 만듭니다.
+        AI와 In이 만나는 자리에서, 필요하다고 느낀 것을 직접 만듭니다.
+        누가 시켜서 만드는 것은 하나도 없습니다.
       </p>
-
       <div class="hero__cta reveal">
         <a class="btn" href="#products">만드는 것 보기 <span aria-hidden="true">→</span></a>
         <a class="btn btn--ghost" href="#contact">연락하기</a>
       </div>
     </div>
+
+    <!-- 지금 뭘 만들고 있는지가 첫 화면 안에서 끝난다 -->
+    <div class="ticker rule">
+      <div class="container ticker__row">
+        {products.map((p) => (
+          <div class="ticker__cell">
+            <span class="label label--accent">{p.n}</span>
+            <span class="ticker__name">{p.name}</span>
+            <span class="label">{p.status}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <!-- ── 이름 ───────────────────────────────────────────── -->
-  <section class="section name" id="name">
-    <div class="container">
-      <p class="eyebrow" data-num="01">이름</p>
-
-      <p class="namemath reveal" aria-label="AI 더하기 In 은 Ain">
-        <span>AI</span>
-        <span class="op" aria-hidden="true">+</span>
-        <span>In</span>
-        <span class="op" aria-hidden="true">=</span>
-        <strong>A<em class="serif">I</em>n</strong>
+  <!-- ═══ 이름 ═══ -->
+  <section class="name" id="name">
+    <div class="container name__inner">
+      <p class="label reveal">이름</p>
+      <p class="equation reveal" aria-label="AI 더하기 In 은 AIn">
+        <span class="equation__w">AI</span>
+        <span class="equation__op" aria-hidden="true">+</span>
+        <span class="equation__w">In</span>
+        <span class="equation__op" aria-hidden="true">=</span>
+        <span class="equation__r">A<i>I</i>n</span>
       </p>
-
       <p class="lede name__lede reveal">
-        <b>AI</b>와 <b>In</b>이 <em class="serif">I</em> 하나를 나눠 씁니다.
+        <b>AI</b>와 <b>In</b>이 <b class="hl">I</b> 하나를 나눠 씁니다.
         기술을 바깥에서 구경하지 않고 그 안에서 만들겠다는 뜻이고,
         회사 이름을 정할 때부터 지키기로 한 유일한 약속입니다.
       </p>
     </div>
   </section>
 
-  <!-- ── 만드는 것 ──────────────────────────────────────── -->
-  <section class="section" id="products">
+  <!-- ═══ 만드는 것 ═══ -->
+  <section class="section products" id="products">
     <div class="container">
-      <p class="eyebrow" data-num="02">만드는 것</p>
-      <ul class="worklist">
+      <header class="head reveal">
+        <h2>만드는 것</h2>
+        <p class="muted head__note">
+          하나가 끝나야 다음을 시작하는 방식으로 일하지 않습니다. 넷은 동시에 자랍니다.
+        </p>
+      </header>
+
+      <ol class="stack">
         {products.map((p) => (
-          <li class="reveal">
-            <div>
-              <span class="worklist__status">{p.status}</span>
-              <span class="worklist__title">{p.name}</span>
-              <span class="worklist__body muted">{p.body}</span>
-              <span class="worklist__kind">{p.kind}</span>
+          <li class="item reveal">
+            <span class="item__n">{p.n}</span>
+            <div class="item__main">
+              <h3>{p.name}</h3>
+              <p class="muted item__body">{p.body}</p>
+            </div>
+            <div class="item__meta">
+              <span class="label label--accent">{p.status}</span>
+              <span class="label">{p.kind}</span>
             </div>
           </li>
         ))}
-      </ul>
-      <p class="muted note reveal">
-        하나가 끝나야 다음을 시작하는 방식으로 일하지 않습니다. 넷은 동시에 자랍니다.
-      </p>
+      </ol>
     </div>
   </section>
 
-  <!-- ── 팀 ─────────────────────────────────────────────── -->
-  <section class="section" id="team">
+  <!-- ═══ 팀 ═══ -->
+  <section class="section team rule" id="team">
     <div class="container">
-      <p class="eyebrow" data-num="03">팀</p>
-      <p class="lede team__lede reveal">
-        세 명입니다. 기획과 개발 사이에 결재선이 없어서,
-        아침에 나온 이야기가 저녁에 화면으로 떠 있는 일이 자주 있습니다.
-      </p>
-      <div class="grid-3 team__grid">
+      <header class="head reveal">
+        <h2>팀</h2>
+        <p class="muted head__note">
+          세 명입니다. 기획과 개발 사이에 결재선이 없어서,
+          아침에 나온 이야기가 저녁에 화면으로 떠 있는 일이 자주 있습니다.
+        </p>
+      </header>
+
+      <ul class="credits">
         {team.map((m) => (
-          <article class="member reveal">
-            <div class="member__avatar" aria-hidden="true">{m.name.slice(0, 1).toUpperCase()}</div>
-            <h3>{m.name}</h3>
-            <p class="member__role">{m.role}</p>
-            <p class="muted">{m.body}</p>
-          </article>
+          <li class="credit reveal">
+            <h3 class="credit__name">{m.name}</h3>
+            <p class="muted credit__body">{m.body}</p>
+            <span class="label credit__role">{m.role}</span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </section>
 
-  <!-- ── 연락 ───────────────────────────────────────────── -->
-  <section class="section contact" id="contact">
-    <div class="container">
-      <p class="eyebrow" data-num="04">연락</p>
-      <h2 class="reveal">
-        같이 만들 게 있다면<br />
-        <span class="serif">언제든</span> 연락 주세요
-      </h2>
+  <!-- ═══ 연락 ═══ -->
+  <section class="contact" id="contact">
+    <div class="container contact__inner">
+      <p class="label reveal">연락</p>
+      <h2 class="contact__title reveal">같이 만들 게 있다면<br />언제든 연락 주세요</h2>
       <a class="contact__mail reveal" href="mailto:TODO@ainworks.kr">TODO@ainworks.kr</a>
-      <p class="muted reveal">TODO: 회신까지 보통 며칠 걸리는지 적어두면 신뢰가 올라갑니다.</p>
+      <p class="muted contact__note reveal">TODO: 회신까지 보통 며칠 걸리는지 적어두면 신뢰가 올라갑니다.</p>
     </div>
   </section>
+
 </Base>
 
 <style>
-  /* Hero */
-  .hero { padding-block: clamp(4rem, 14vh, 9rem) var(--s-7); }
-  .hero__status {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6em;
-    font-size: var(--t--1);
-    color: var(--ink-2);
-    margin-bottom: var(--s-4);
-  }
-  .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
-    animation: pulse 2.6s ease-out infinite;
-  }
-  @keyframes pulse {
-    70%  { box-shadow: 0 0 0 8px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
-  }
-
-  .hero__title { max-width: 16ch; }
+  /* ── HERO ── */
+  .hero { display: flex; flex-direction: column; min-height: clamp(560px, 88vh, 860px); }
+  .hero__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: var(--s-6); }
+  .hero__title { margin-top: var(--s-3); max-width: 14ch; }
   .hero__lede { margin-top: var(--s-4); max-width: 44ch; }
   .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-5); }
 
-  /* 이름 — AI + In = AIn */
-  .namemath {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.4em;
-    font-size: var(--t-3);
-    letter-spacing: -0.03em;
-    line-height: 1.2;
+  .ticker__row { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .ticker__cell {
+    display: flex; align-items: baseline; gap: .7rem;
+    padding: var(--s-3) var(--s-2) var(--s-3) 0;
   }
-  .namemath .op { color: var(--ink-3); font-weight: 300; }
-  .namemath span:not(.op) { color: var(--ink-2); }
-  .namemath strong { font-weight: 600; color: var(--ink); }
-  .namemath em { font-size: 1.12em; color: var(--accent); }
-  .name__lede { margin-top: var(--s-4); max-width: 46ch; }
+  .ticker__cell + .ticker__cell { border-left: 1px solid var(--line); padding-left: var(--s-3); }
+  .ticker__name { font-weight: 600; letter-spacing: -.02em; font-size: .95rem; }
+  @media (max-width: 860px) {
+    .ticker__row { grid-template-columns: repeat(2, 1fr); }
+    .ticker__cell:nth-child(3) { border-left: none; padding-left: 0; }
+    .ticker__cell:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 460px) {
+    .ticker__row { grid-template-columns: 1fr; }
+    .ticker__cell + .ticker__cell { border-left: none; padding-left: 0; border-top: 1px solid var(--line); }
+  }
+
+  /* ── 이름 ── */
+  .name { background: var(--accent-soft); padding-block: var(--s-7); }
+  .name__inner { display: grid; gap: var(--s-4); }
+  .equation {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: .5em;
+    font-family: var(--font-en);
+    font-size: clamp(2.2rem, 1.1rem + 5vw, 4.5rem);
+    font-weight: 700; letter-spacing: -.05em; line-height: 1.1;
+  }
+  .equation__w { color: var(--ink-2); }
+  .equation__op { color: var(--ink-3); font-weight: 400; }
+  .equation__r { color: var(--ink); }
+  .equation__r i { font-style: normal; color: var(--accent); }
+  .name__lede { max-width: 48ch; }
   .name__lede b { font-weight: 600; color: var(--ink); }
-  .name__lede em { color: var(--accent); font-size: 1.1em; }
+  .name__lede b.hl { color: var(--accent); }
 
-  /* 목록 — 이미지 없이 표처럼 */
-  .worklist { list-style: none; padding: 0; }
-  .worklist li { border-top: 1px solid var(--line); }
-  .worklist li:last-child { border-bottom: 1px solid var(--line); }
-  .worklist li > div {
+  /* ── 섹션 머리 ── */
+  .head { display: grid; gap: var(--s-2); margin-bottom: var(--s-6); }
+  .head__note { max-width: 46ch; }
+
+  /* ── 제품 스택 ── */
+  .stack { list-style: none; margin: 0; padding: 0; counter-reset: none; }
+  .item {
     display: grid;
-    grid-template-columns: 6rem minmax(9rem, 14rem) 1fr auto;
+    grid-template-columns: 5.5rem 1fr 9rem;
+    gap: var(--s-4);
+    align-items: start;
+    padding: var(--s-4) var(--s-2) var(--s-4) 0;
+    border-top: 1px solid var(--line);
+    transition: background-color .25s ease;
+  }
+  .item:last-child { border-bottom: 1px solid var(--line); }
+  .item:hover { background: var(--bg-2); }
+  .item__n {
+    font-family: var(--font-en);
+    font-size: clamp(2rem, 1.4rem + 2.4vw, 3.1rem);
+    font-weight: 700; letter-spacing: -.05em; line-height: .9;
+    color: var(--ink-3);
+    transition: color .25s ease;
+  }
+  .item:hover .item__n { color: var(--accent); }
+  .item__main { display: grid; gap: .45rem; }
+  .item__body { max-width: 48ch; font-size: .95rem; }
+  .item__meta { display: grid; gap: .35rem; justify-items: end; text-align: right; }
+  @media (max-width: 780px) {
+    .item { grid-template-columns: 3.5rem 1fr; gap: var(--s-3); }
+    .item__meta { grid-column: 2; justify-items: start; text-align: left;
+                  display: flex; gap: var(--s-3); margin-top: .3rem; }
+  }
+
+  /* ── 팀: 크레딧 목록 ── */
+  .credits { list-style: none; margin: 0; padding: 0; }
+  .credit {
+    display: grid;
+    grid-template-columns: minmax(9rem, 15rem) 1fr auto;
+    gap: var(--s-4);
     align-items: baseline;
-    gap: var(--s-3);
-    padding-block: var(--s-4);
+    padding: var(--s-4) 0;
+    border-top: 1px solid var(--line);
   }
-  .worklist__status {
-    font-family: var(--font-serif);
-    font-size: var(--t-0);
-    color: var(--accent);
+  .credit:last-child { border-bottom: 1px solid var(--line); }
+  .credit__name {
+    font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.1rem);
+    font-weight: 700; letter-spacing: -.04em;
   }
-  .worklist__title { font-size: var(--t-1); letter-spacing: -0.02em; font-weight: 600; }
-  .worklist__body { font-size: var(--t--1); max-width: 46ch; }
-  .worklist__kind {
-    font-size: var(--t--1);
-    color: var(--ink-3);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
+  .credit__body { max-width: 42ch; font-size: .95rem; }
+  @media (max-width: 780px) {
+    .credit { grid-template-columns: 1fr; gap: .4rem; }
   }
-  @media (max-width: 820px) {
-    .worklist li > div { grid-template-columns: 5rem 1fr; row-gap: var(--s-1); }
-    .worklist__body, .worklist__kind { grid-column: 2; }
-  }
-  .note { margin-top: var(--s-4); font-size: var(--t--1); }
 
-  /* 팀 */
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--s-6) var(--s-4);
-  }
-  .team__lede { margin-bottom: var(--s-6); max-width: 46ch; }
-  .member { display: grid; gap: var(--s-1); align-content: start; }
-  .member__avatar {
-    width: 56px; height: 56px;
-    display: grid;
-    place-items: center;
-    margin-bottom: var(--s-2);
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    color: var(--accent);
-    background: var(--surface);
-  }
-  .member__role {
-    font-size: var(--t--1);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .member p.muted { max-width: 34ch; }
-
-  /* 연락 */
+  /* ── 연락 ── */
   .contact { padding-block: var(--s-7) var(--s-8); }
+  .contact__inner { display: grid; gap: var(--s-3); }
+  .contact__title { max-width: 18ch; }
   .contact__mail {
-    display: inline-block;
-    margin-block: var(--s-5) var(--s-3);
-    font-size: var(--t-2);
-    letter-spacing: -0.03em;
+    justify-self: start;
+    margin-top: var(--s-3);
+    font-family: var(--font-en);
+    font-size: clamp(1.4rem, 1rem + 1.9vw, 2.3rem);
+    font-weight: 600; letter-spacing: -.035em;
     text-decoration: none;
-    border-bottom: 1px solid var(--line);
-    padding-bottom: 0.15em;
-    transition: border-color 0.25s ease, color 0.25s ease;
+    padding-bottom: .12em;
+    border-bottom: 2px solid var(--line);
+    transition: border-color .25s ease, color .25s ease;
   }
-  .contact__mail:hover { color: var(--accent-ink); border-color: var(--accent); }
+  .contact__mail:hover { color: var(--accent); border-color: var(--accent); }
 </style>

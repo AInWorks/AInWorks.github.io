@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 
 const {
   title = 'AInWorks',
-  description = 'TODO: 한 줄 소개 — 검색결과와 카톡 미리보기에 그대로 나갑니다.',
+  description = 'AI와 In의 합성어, 아인웍스. 개발자와 기획자 세 명이 만들고 싶은 것을 전부 만듭니다.',
 } = Astro.props;
 ---
 <html lang="ko">
@@ -17,20 +17,25 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBFAF7" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#100F0C" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FFFFFF" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0A0C11" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <!-- 테마를 그리기 전에 확정한다. 없으면 다크 사용자에게 흰 화면이 한 번 번쩍인다. -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch (e) {}
+    </script>
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" />
   </head>
   <body>
     <a class="skip" href="#main">본문으로 건너뛰기</a>
@@ -39,34 +44,34 @@ const {
     <Footer />
 
     <script is:inline>
-      // 스크롤 진입 애니메이션 — 페이지당 이 스크립트 하나가 JS의 전부입니다.
-      const io = new IntersectionObserver(
-        (entries) => {
-          for (const e of entries) {
-            if (e.isIntersecting) {
-              e.target.classList.add('is-in');
-              io.unobserve(e.target);
-            }
-          }
-        },
-        { rootMargin: '0px 0px -10% 0px' }
-      );
+      // 1) 스크롤 등장
+      const io = new IntersectionObserver((es) => {
+        for (const e of es) if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      }, { rootMargin: '0px 0px -8% 0px' });
       document.querySelectorAll('.reveal').forEach((el, i) => {
-        el.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+        el.style.transitionDelay = `${Math.min(i % 4, 3) * 65}ms`;
         io.observe(el);
+      });
+
+      // 2) 테마 토글
+      const root = document.documentElement;
+      const sysDark = matchMedia('(prefers-color-scheme: dark)');
+      const current = () => root.dataset.theme || (sysDark.matches ? 'dark' : 'light');
+      document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
+        const sync = () => btn.setAttribute('aria-label',
+          current() === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환');
+        sync();
+        btn.addEventListener('click', () => {
+          const next = current() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('theme', next); } catch (e) {}
+          sync();
+        });
       });
     </script>
 
     <style is:global>
-      .skip {
-        position: absolute;
-        left: -9999px;
-        top: 0;
-        background: var(--ink);
-        color: var(--paper);
-        padding: 0.75rem 1rem;
-        z-index: 100;
-      }
+      .skip { position: absolute; left: -9999px; top: 0; background: var(--ink); color: var(--bg); padding: .75rem 1rem; z-index: 100; }
       .skip:focus { left: 0; }
     </style>
   </body>
