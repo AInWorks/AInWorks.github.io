@@ -1,0 +1,100 @@
+---
+const links = [
+  { href: '#what',    label: '하는 일' },
+  { href: '#work',    label: '작업' },
+  { href: '#team',    label: '팀' },
+  { href: '#contact', label: '연락' },
+];
+---
+<header class="nav">
+  <div class="container nav__inner">
+    <a class="wordmark" href="/" aria-label="AInWorks 홈">A<span class="serif">I</span>nWorks</a>
+
+    <nav class="nav__links" aria-label="주요 메뉴">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <details class="nav__mobile">
+      <summary aria-label="메뉴 열기"><span></span><span></span></summary>
+      <nav aria-label="모바일 메뉴">
+        {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .nav:has(+ * ) { border-bottom-color: var(--line); }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-4);
+    height: 68px;
+  }
+
+  .wordmark {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+  .wordmark .serif { font-size: 1.12em; color: var(--accent); }
+
+  .nav__links {
+    display: flex;
+    gap: var(--s-4);
+    font-size: var(--t--1);
+  }
+  .nav__links a {
+    text-decoration: none;
+    color: var(--ink-2);
+    transition: color 0.2s ease;
+  }
+  .nav__links a:hover { color: var(--ink); }
+
+  .nav__mobile { display: none; position: relative; }
+  .nav__mobile summary {
+    list-style: none;
+    cursor: pointer;
+    display: grid;
+    gap: 5px;
+    padding: 8px 2px;
+  }
+  .nav__mobile summary::-webkit-details-marker { display: none; }
+  .nav__mobile summary span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--ink);
+  }
+  .nav__mobile nav {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px);
+    display: grid;
+    gap: var(--s-2);
+    min-width: 160px;
+    padding: var(--s-3);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgb(0 0 0 / 0.08);
+  }
+  .nav__mobile nav a { text-decoration: none; color: var(--ink-2); }
+
+  @media (max-width: 720px) {
+    .nav__links { display: none; }
+    .nav__mobile { display: block; }
+  }
+</style>

@@ -1,0 +1,59 @@
+<footer class="foot">
+  <div class="container">
+    <div class="foot__top">
+      <a class="wordmark" href="/">A<span class="serif">I</span>nWorks</a>
+      <nav class="foot__links" aria-label="푸터 메뉴">
+        <a class="link" href="mailto:hello@ainworks.kr">hello@ainworks.kr</a>
+        <a class="link" href="#">GitHub</a>
+        <a class="link" href="#">LinkedIn</a>
+      </nav>
+    </div>
+
+    <!-- 한국 사업자는 상호·대표자·사업자등록번호·주소 표기가 필요합니다. TODO: 실제 값으로 교체 -->
+    <p class="foot__legal">
+      주식회사 AInWorks · 대표 ○○○ · 사업자등록번호 000-00-00000<br />
+      서울특별시 ○○구 ○○로 00, 0층
+    </p>
+    <p class="foot__copy">© {new Date().getFullYear()} AInWorks. All rights reserved.</p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: 1px solid var(--line);
+    padding-block: var(--s-6) var(--s-5);
+    background: var(--paper-2);
+  }
+  .foot__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-bottom: var(--s-5);
+  }
+  .wordmark {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+  }
+  .wordmark .serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.12em;
+    color: var(--accent);
+  }
+  .foot__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-4);
+    font-size: var(--t--1);
+  }
+  .foot__legal, .foot__copy {
+    font-size: var(--t--1);
+    color: var(--ink-3);
+    line-height: 1.8;
+  }
+  .foot__copy { margin-top: var(--s-2); }
+</style>

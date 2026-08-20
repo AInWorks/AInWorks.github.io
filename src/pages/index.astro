@@ -1,0 +1,230 @@
+---
+import Base from '../layouts/Base.astro';
+
+/* ─────────────────────────────────────────────────────────
+   여기 있는 문구는 전부 자리표시자입니다.
+   이 배열만 고치면 페이지가 따라옵니다. 마크업은 건드릴 필요 없습니다.
+   ───────────────────────────────────────────────────────── */
+
+const services = [
+  { n: '01', title: 'AI 제품 개발', body: 'TODO: 무엇을 어디까지 해주는지 한두 문장. 추상어("혁신적 솔루션") 대신 구체적인 산출물로 적으세요.' },
+  { n: '02', title: '리서치 · PoC',  body: 'TODO: 이 팀만 할 수 있는 이유가 드러나게. 근거가 있으면 숫자를 넣으세요.' },
+  { n: '03', title: '기술 자문',      body: 'TODO: 어떤 규모·업종의 고객에게 맞는지.' },
+];
+
+const work = [
+  { year: '2026', title: '프로젝트 이름',       kind: '자체 제품', body: 'TODO: 한 줄 설명.' },
+  { year: '2025', title: '또 다른 프로젝트',    kind: '고객 프로젝트', body: 'TODO: 한 줄 설명.' },
+  { year: '2025', title: '세 번째 프로젝트',    kind: '연구',      body: 'TODO: 한 줄 설명.' },
+];
+
+const team = [
+  { name: 'pyodep',  role: 'Founder · Research', body: 'TODO: 한 줄. 이력이 아니라 지금 뭘 하는지.' },
+  { name: 'wons07',  role: 'TODO: 역할',          body: 'TODO: 한 줄.' },
+];
+---
+
+<Base title="AInWorks — TODO: 한 줄 소개">
+  <!-- ── Hero ───────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__status reveal">
+        <span class="dot" aria-hidden="true"></span>2026년 신규 프로젝트 논의 중
+      </p>
+
+      <h1 class="hero__title reveal">
+        쓸모를 <span class="serif">증명</span>하는<br />
+        소프트웨어를 만듭니다
+      </h1>
+
+      <p class="lede hero__lede reveal">
+        TODO: 두 문장. 무엇을 누구를 위해 만드는지, 그리고 왜 이 팀인지.
+        수식어를 빼고 명사와 동사만 남기면 대개 좋아집니다.
+      </p>
+
+      <div class="hero__cta reveal">
+        <a class="btn" href="#contact">프로젝트 문의 <span aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href="#work">작업 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── What we do ─────────────────────────────────────── -->
+  <section class="section" id="what">
+    <div class="container">
+      <p class="eyebrow" data-num="01">하는 일</p>
+      <div class="grid-3">
+        {services.map((s) => (
+          <article class="card reveal">
+            <h3>{s.title}</h3>
+            <p class="muted">{s.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Work ───────────────────────────────────────────── -->
+  <section class="section" id="work">
+    <div class="container">
+      <p class="eyebrow" data-num="02">작업</p>
+      <ul class="worklist">
+        {work.map((w) => (
+          <li class="reveal">
+            <a href="#">
+              <span class="worklist__year">{w.year}</span>
+              <span class="worklist__title">{w.title}</span>
+              <span class="worklist__body muted">{w.body}</span>
+              <span class="worklist__kind">{w.kind}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Team ───────────────────────────────────────────── -->
+  <section class="section" id="team">
+    <div class="container">
+      <p class="eyebrow" data-num="03">팀</p>
+      <p class="lede team__lede reveal">
+        TODO: 팀 규모와 일하는 방식 한 문장. 작은 팀은 그 자체가 강점이니 숨기지 마세요.
+      </p>
+      <div class="grid-3 team__grid">
+        {team.map((m) => (
+          <article class="member reveal">
+            <div class="member__avatar" aria-hidden="true">{m.name.slice(0, 1)}</div>
+            <h3>{m.name}</h3>
+            <p class="member__role">{m.role}</p>
+            <p class="muted">{m.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────────── -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <p class="eyebrow" data-num="04">연락</p>
+      <h2 class="reveal">
+        같이 만들 게 있다면<br />
+        <span class="serif">언제든</span> 연락 주세요
+      </h2>
+      <a class="contact__mail reveal" href="mailto:hello@ainworks.kr">hello@ainworks.kr</a>
+      <p class="muted reveal">TODO: 회신까지 보통 며칠 걸리는지 적어두면 신뢰가 올라갑니다.</p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero { padding-block: clamp(4rem, 14vh, 9rem) var(--s-7); }
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    font-size: var(--t--1);
+    color: var(--ink-2);
+    margin-bottom: var(--s-4);
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent);
+    animation: pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse {
+    70%  { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+  }
+
+  .hero__title { max-width: 16ch; }
+  .hero__lede { margin-top: var(--s-4); max-width: 42ch; }
+  .hero__cta { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-5); }
+
+  /* Grid */
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--s-5) var(--s-4);
+  }
+  .card { display: grid; gap: var(--s-2); align-content: start; }
+  .card h3 { max-width: 18ch; }
+  .card p { max-width: 38ch; }
+
+  /* Work list — 이미지 없이 표처럼 읽히게 */
+  .worklist { list-style: none; padding: 0; }
+  .worklist li { border-top: 1px solid var(--line); }
+  .worklist li:last-child { border-bottom: 1px solid var(--line); }
+  .worklist a {
+    display: grid;
+    grid-template-columns: 5rem minmax(10rem, 16rem) 1fr auto;
+    align-items: baseline;
+    gap: var(--s-3);
+    padding-block: var(--s-4);
+    text-decoration: none;
+    transition: background-color 0.25s ease, padding-inline 0.25s ease;
+  }
+  .worklist a:hover {
+    background: var(--paper-2);
+    padding-inline: var(--s-2);
+  }
+  .worklist__year {
+    font-family: var(--font-serif);
+    font-size: var(--t-0);
+    color: var(--accent);
+  }
+  .worklist__title { font-size: var(--t-1); letter-spacing: -0.02em; }
+  .worklist__body { font-size: var(--t--1); }
+  .worklist__kind {
+    font-size: var(--t--1);
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  @media (max-width: 800px) {
+    .worklist a { grid-template-columns: 4rem 1fr; row-gap: var(--s-1); }
+    .worklist__body, .worklist__kind { grid-column: 2; }
+  }
+
+  /* Team */
+  .team__lede { margin-bottom: var(--s-6); max-width: 46ch; }
+  .team__grid { gap: var(--s-6) var(--s-4); }
+  .member { display: grid; gap: var(--s-1); align-content: start; }
+  .member__avatar {
+    width: 56px; height: 56px;
+    display: grid;
+    place-items: center;
+    margin-bottom: var(--s-2);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: var(--accent);
+    background: var(--surface);
+  }
+  .member__role {
+    font-size: var(--t--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .member p.muted { max-width: 34ch; }
+
+  /* Contact */
+  .contact { padding-block: var(--s-7) var(--s-8); }
+  .contact__mail {
+    display: inline-block;
+    margin-block: var(--s-5) var(--s-3);
+    font-size: var(--t-2);
+    letter-spacing: -0.03em;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.15em;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+  .contact__mail:hover { color: var(--accent-ink); border-color: var(--accent); }
+</style>

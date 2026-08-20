@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const {
+  title = 'AInWorks',
+  description = 'TODO: 한 줄 소개 — 검색결과와 카톡 미리보기에 그대로 나갑니다.',
+} = Astro.props;
+---
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#FBFAF7" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#100F0C" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+    />
+  </head>
+  <body>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+    <Nav />
+    <main id="main"><slot /></main>
+    <Footer />
+
+    <script is:inline>
+      // 스크롤 진입 애니메이션 — 페이지당 이 스크립트 하나가 JS의 전부입니다.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('is-in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { rootMargin: '0px 0px -10% 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+        io.observe(el);
+      });
+    </script>
+
+    <style is:global>
+      .skip {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--ink);
+        color: var(--paper);
+        padding: 0.75rem 1rem;
+        z-index: 100;
+      }
+      .skip:focus { left: 0; }
+    </style>
+  </body>
+</html>
