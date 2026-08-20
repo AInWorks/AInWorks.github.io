@@ -138,7 +138,9 @@ const team = [
 
 <style>
   /* ── HERO ── */
-  .hero { display: flex; flex-direction: column; min-height: clamp(560px, 88vh, 860px); }
+  .hero { display: flex; flex-direction: column; min-height: clamp(520px, 88vh, 860px); }
+  /* 폰은 주소창이 접히고 펴지면서 vh 가 튄다 — svh 를 아는 브라우저는 그쪽을 쓴다 */
+  @supports (height: 100svh) { .hero { min-height: clamp(520px, 88svh, 860px); } }
   .hero__body { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-block: var(--s-6); }
   .hero__title { margin-top: var(--s-3); max-width: 14ch; }
   .hero__lede { margin-top: var(--s-4); max-width: 44ch; }
@@ -230,6 +232,9 @@ const team = [
   .credit__body { max-width: 42ch; font-size: .95rem; }
   @media (max-width: 780px) {
     .credit { grid-template-columns: 1fr; gap: .4rem; }
+    .credit__name { order: 0; }
+    .credit__role { order: 1; }
+    .credit__body { order: 2; }
   }
 
   /* ── 연락 ── */
@@ -245,6 +250,8 @@ const team = [
     text-decoration: none;
     padding-bottom: .12em;
     border-bottom: 2px solid var(--line);
+    max-width: 100%;
+    overflow-wrap: anywhere;
     transition: border-color .25s ease, color .25s ease;
   }
   .contact__mail:hover { color: var(--accent); border-color: var(--accent); }

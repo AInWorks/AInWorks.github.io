@@ -115,6 +115,11 @@
   :root.theme-anim { transition: none; }
 }
 
+/* 여백은 화면이 좁아지면 같이 줄인다. 안 그러면 폰에서 빈 화면만 계속 넘어간다. */
+@media (max-width: 640px) {
+  :root { --s-6: 3rem; --s-7: 4.25rem; --s-8: 5.5rem; }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 

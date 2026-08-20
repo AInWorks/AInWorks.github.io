@@ -25,9 +25,41 @@ const links = [
         </svg>
       </button>
       <a class="btn nav__cta" href="#contact">연락하기</a>
+
+      <button class="burger" type="button" aria-expanded="false"
+              aria-controls="mobile-menu" aria-label="메뉴 열기">
+        <span></span><span></span>
+      </button>
     </div>
   </div>
+
+  <div class="menu" id="mobile-menu" hidden>
+    <nav class="container menu__inner" aria-label="모바일 메뉴">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a class="btn menu__cta" href="#contact">연락하기</a>
+    </nav>
+  </div>
 </header>
+
+<script is:inline>
+  {
+    const burger = document.querySelector('.burger');
+    const menu = document.getElementById('mobile-menu');
+    if (burger && menu) {
+      const set = (open) => {
+        burger.setAttribute('aria-expanded', String(open));
+        burger.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+        burger.classList.toggle('is-open', open);
+        menu.hidden = !open;
+      };
+      burger.addEventListener('click', () => set(burger.getAttribute('aria-expanded') !== 'true'));
+      menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+      addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+      // 데스크톱 폭으로 넓어지면 열린 채로 남지 않게 닫는다
+      matchMedia('(min-width: 761px)').addEventListener('change', (e) => { if (e.matches) set(false); });
+    }
+  }
+</script>
 
 <style>
   .nav {
@@ -82,10 +114,61 @@ const links = [
 
   .nav__cta { padding: .58em 1.1em; }
 
+  /* ── 모바일 메뉴 ── */
+  .burger {
+    /* grid 로 두면 암시적 행이 버튼 높이만큼 늘어나 두 획이 22px 씩 벌어진다.
+       flex + gap 으로 두 획을 실제로 붙여야 translateY 로 겹칠 수 있다. */
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 34px; height: 34px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: transparent;
+    cursor: pointer;
+  }
+  .burger span {
+    display: block;
+    width: 16px; height: 1.5px;
+    background: var(--ink);
+    transition: transform .25s cubic-bezier(.4,0,.2,1), opacity .2s ease;
+  }
+  .burger.is-open span:first-child { transform: translateY(2.75px) rotate(45deg); }
+  .burger.is-open span:last-child  { transform: translateY(-2.75px) rotate(-45deg); }
+
+  .menu {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+    animation: menuIn .22s cubic-bezier(.4,0,.2,1);
+  }
+  .menu[hidden] { display: none; }
+  @keyframes menuIn { from { opacity: 0; transform: translateY(-6px); } }
+
+  .menu__inner { display: grid; gap: var(--s-1); padding-block: var(--s-3); }
+  .menu__inner a:not(.btn) {
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 1.05rem;
+    font-weight: 500;
+    padding: .65rem 0;
+  }
+  .menu__cta { justify-self: start; margin-top: var(--s-2); }
+
   @media (max-width: 760px) {
     .nav__links { display: none; }
-  }
-  @media (max-width: 420px) {
     .nav__cta { display: none; }
+    .burger { display: flex; }
+  }
+  @media (min-width: 761px) {
+    .menu { display: none; }
+  }
+
+  /* 손가락은 마우스보다 굵다 — 터치 기기에서는 44px 로 키운다 */
+  @media (pointer: coarse) {
+    .toggle, .burger { width: 44px; height: 44px; }
   }
 </style>
